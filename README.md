@@ -3,7 +3,7 @@
 ## Members
 
 - Herman Bantjes 601427
-- 
+- Stiaan Megit 600819
 
 This project is a C# Windows Forms application that serves as a Version-Controlled Student Management System. The system provides functionality for managing student records, and integrates Git version control and GitHub for collaboration and source tracking. The application allows users to perform CRUD operations (Create, Read, Update, Delete) and generate summary reports, all while maintaining proper version control.
 
