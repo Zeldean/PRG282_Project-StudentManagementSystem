@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.IDtb = new System.Windows.Forms.TextBox();
-            this.NAMEtb = new System.Windows.Forms.TextBox();
-            this.AGEtb = new System.Windows.Forms.TextBox();
             this.COURSEtb = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.AGEtb = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.NAMEtb = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.IDtb = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.ADDbtn = new System.Windows.Forms.Button();
             this.UPDATEbtn = new System.Windows.Forms.Button();
             this.DELETEbtn = new System.Windows.Forms.Button();
@@ -66,32 +66,12 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Student Information";
             // 
-            // label1
+            // COURSEtb
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 31);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 16);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Student ID:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 88);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 16);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Name:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 147);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 16);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Age:";
+            this.COURSEtb.Location = new System.Drawing.Point(9, 223);
+            this.COURSEtb.Name = "COURSEtb";
+            this.COURSEtb.Size = new System.Drawing.Size(144, 22);
+            this.COURSEtb.TabIndex = 4;
             // 
             // label4
             // 
@@ -102,12 +82,21 @@
             this.label4.TabIndex = 3;
             this.label4.Text = "Course";
             // 
-            // IDtb
+            // AGEtb
             // 
-            this.IDtb.Location = new System.Drawing.Point(9, 50);
-            this.IDtb.Name = "IDtb";
-            this.IDtb.Size = new System.Drawing.Size(144, 22);
-            this.IDtb.TabIndex = 1;
+            this.AGEtb.Location = new System.Drawing.Point(9, 166);
+            this.AGEtb.Name = "AGEtb";
+            this.AGEtb.Size = new System.Drawing.Size(144, 22);
+            this.AGEtb.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 31);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(71, 16);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Student ID:";
             // 
             // NAMEtb
             // 
@@ -116,19 +105,30 @@
             this.NAMEtb.Size = new System.Drawing.Size(144, 22);
             this.NAMEtb.TabIndex = 2;
             // 
-            // AGEtb
+            // label3
             // 
-            this.AGEtb.Location = new System.Drawing.Point(9, 166);
-            this.AGEtb.Name = "AGEtb";
-            this.AGEtb.Size = new System.Drawing.Size(144, 22);
-            this.AGEtb.TabIndex = 3;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 147);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(35, 16);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Age:";
             // 
-            // COURSEtb
+            // IDtb
             // 
-            this.COURSEtb.Location = new System.Drawing.Point(9, 223);
-            this.COURSEtb.Name = "COURSEtb";
-            this.COURSEtb.Size = new System.Drawing.Size(144, 22);
-            this.COURSEtb.TabIndex = 4;
+            this.IDtb.Location = new System.Drawing.Point(9, 50);
+            this.IDtb.Name = "IDtb";
+            this.IDtb.Size = new System.Drawing.Size(144, 22);
+            this.IDtb.TabIndex = 1;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 88);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(47, 16);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Name:";
             // 
             // ADDbtn
             // 
@@ -200,6 +200,7 @@
             this.VIEWbtn.TabIndex = 8;
             this.VIEWbtn.Text = "VIEW";
             this.VIEWbtn.UseVisualStyleBackColor = true;
+            this.VIEWbtn.Click += new System.EventHandler(this.VIEWbtn_Click);
             // 
             // Form1
             // 
