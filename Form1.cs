@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +32,20 @@ namespace StudentManagementSystem
             bs.DataSource = studentlist;
             dataGridView1.DataSource = bs;
 
+        }
+
+        private void ADDbtn_Click(object sender, EventArgs e)
+        {
+            studentlist.Add(new Student(IDtb.Text, NAMEtb.Text, Convert.ToInt32(AGEtb.Text), COURSEtb.Text));
+            List<string> list = new List<string>();
+            foreach (Student student in studentlist)
+            {
+                list.Add($"{student.StudentID},{student.Name},{student.Age},{student.Course}");
+            }
+            File.WriteAllLines(filename, list);
+            bs.DataSource = " ";
+            bs.DataSource = studentlist;
+            dataGridView1.DataSource = bs;
         }
     }
 }
