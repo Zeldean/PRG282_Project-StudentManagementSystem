@@ -31,7 +31,6 @@ namespace StudentManagementSystem
 
             bs.DataSource = studentlist;
             dataGridView1.DataSource = bs;
-
         }
 
         private void ADDbtn_Click(object sender, EventArgs e)
@@ -45,6 +44,14 @@ namespace StudentManagementSystem
             File.WriteAllLines(filename, list);
             bs.DataSource = " ";
             bs.DataSource = studentlist;
+            dataGridView1.DataSource = bs;
+        }
+
+        private void SEARCHtb_TextChanged(object sender, EventArgs e)
+        {            
+            List<Student> filterdStudentList = DataHandler.FindID(SEARCHtb.Text, studentlist);
+            bs.DataSource = filterdStudentList;
+            
             dataGridView1.DataSource = bs;
         }
     }
