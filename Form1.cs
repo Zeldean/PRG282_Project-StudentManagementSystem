@@ -42,5 +42,36 @@ namespace StudentManagementSystem
             bs.DataSource = studentlist;
             dataGridView1.DataSource = bs;
         }
+
+        //<<<<<<< HEAD
+
+        //=======
+        private void SEARCHtb_TextChanged(object sender, EventArgs e)
+        {
+            List<Student> filterdStudentList = DataHandler.FindID(SEARCHtb.Text, studentlist);
+            bs.DataSource = filterdStudentList;
+
+            dataGridView1.DataSource = bs;
+            //>>>>>>> 5dc56499069c7d0b64960379630717911638db06
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Boolean notexist = !File.Exists(path);
+
+            if (notexist)
+            {
+                File.CreateText(path);
+            }
+            if (new FileInfo(path).Length == 0)
+            {
+
+            }
+            else
+            {
+                List<Student> list = new List<Student>();
+                list = handler.format(myreader.read());
+                studentlist = list;
+            }
+        }
     }
 }
