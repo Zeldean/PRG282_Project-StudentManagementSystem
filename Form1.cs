@@ -147,5 +147,22 @@ namespace StudentManagementSystem
         {           
                 handler.deleteStudent(dataGridView1, studentlist);           
         }
+
+        private void SUMMARYbtn_Click(object sender, EventArgs e)
+        {
+            var (studentCount, averageAge) = DataHandler.GetSummary(studentlist);
+
+            using (FileStream fileStream = new FileStream(@"./summary.txt", FileMode.OpenOrCreate))
+            using (StreamWriter writer = new StreamWriter(fileStream))
+            {
+                writer.WriteLine("Summary");
+                writer.WriteLine("====================");
+                writer.WriteLine($"Total Number of Students: {studentCount}");
+                writer.WriteLine($"Average Age of Students: {averageAge}");
+            }
+
+            MessageBox.Show("Summary report has been generated successfully.");
+        }
+
     }
 }

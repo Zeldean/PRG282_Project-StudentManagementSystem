@@ -183,6 +183,7 @@
             this.SUMMARYbtn.TabIndex = 4;
             this.SUMMARYbtn.Text = "SUMMARY";
             this.SUMMARYbtn.UseVisualStyleBackColor = true;
+            this.SUMMARYbtn.Click += new System.EventHandler(this.SUMMARYbtn_Click);
             // 
             // dataGridView1
             // 
