@@ -27,7 +27,6 @@ namespace StudentManagementSystem
         {
             bs.DataSource = studentlist;
             dataGridView1.DataSource = bs;
-
         }
 
         private void ADDbtn_Click(object sender, EventArgs e)
@@ -42,26 +41,6 @@ namespace StudentManagementSystem
             bs.DataSource = " ";
             bs.DataSource = studentlist;
             dataGridView1.DataSource = bs;
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            Boolean notexist = !File.Exists(path);
-
-            if (notexist)
-            {
-                File.CreateText(path);
-            }
-            if (new FileInfo(path).Length == 0)
-            {
-
-            }
-            else
-            {
-                List<Student> list = new List<Student>();
-                list = handler.format(myreader.read());
-                studentlist = list;
-            }
         }
     }
 }
