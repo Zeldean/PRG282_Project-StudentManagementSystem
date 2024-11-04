@@ -10,12 +10,18 @@ namespace StudentManagementSystem
     internal class Read
     {
         
-        public string path = Path.GetFullPath("Content.txt");
+        public string filePath = Path.GetFullPath("Content.txt");
         public List<string> read()
         {
             List<string> list = new List<string>();
-            list = File.ReadAllLines(path).ToList();
+            list = File.ReadAllLines(filePath).ToList();
             return list;
+        }
+
+        public void write(List<Student> studentlist)
+        {
+            var lines = studentlist.Select(s => $"{s.StudentID},{s.Name},{s.Age},{s.Course}").ToArray();
+            File.WriteAllLines(filePath, lines);
         }
     }
 }
