@@ -76,7 +76,8 @@ namespace StudentManagementSystem
 
         private void SUMMARYbtn_Click(object sender, EventArgs e)
         {
-            //studentlist.Count
+            
+
         }
     }
 }

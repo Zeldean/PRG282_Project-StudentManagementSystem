@@ -19,6 +19,7 @@ namespace StudentManagementSystem
                 students.Add(person);
             }
             return students;
+
         }
 
         public static List<Student> FindID(string ID, List<Student> students)
@@ -31,9 +32,16 @@ namespace StudentManagementSystem
             return filterdStudents;
         }
 
-        public static void GetSummary()
+        public static (int StudentCount, float AverageAge) GetSummary(List<Student> students)
         {
+            int numberOfStudents = students.Count;
+            float avgAge = students.Aggregate(0, (sum, student) =>
+            {
+                return sum + student.Age;
+            }) / (float)numberOfStudents;
 
+            return (numberOfStudents, avgAge);
         }
+
     }
 }
