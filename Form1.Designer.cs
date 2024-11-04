@@ -31,7 +31,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.COURSEtb = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.AGEtb = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.NAMEtb = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -45,24 +44,26 @@
             this.SEARCHtb = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.VIEWbtn = new System.Windows.Forms.Button();
+            this.AGEtb = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AGEtb)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.AGEtb);
             this.groupBox1.Controls.Add(this.COURSEtb);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.AGEtb);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.NAMEtb);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.IDtb);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(9, 58);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(146, 210);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
@@ -71,7 +72,7 @@
             // COURSEtb
             // 
             this.COURSEtb.Location = new System.Drawing.Point(7, 181);
-            this.COURSEtb.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.COURSEtb.Margin = new System.Windows.Forms.Padding(2);
             this.COURSEtb.Name = "COURSEtb";
             this.COURSEtb.Size = new System.Drawing.Size(109, 20);
             this.COURSEtb.TabIndex = 4;
@@ -86,14 +87,6 @@
             this.label4.TabIndex = 3;
             this.label4.Text = "Course";
             // 
-            // AGEtb
-            // 
-            this.AGEtb.Location = new System.Drawing.Point(7, 135);
-            this.AGEtb.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.AGEtb.Name = "AGEtb";
-            this.AGEtb.Size = new System.Drawing.Size(109, 20);
-            this.AGEtb.TabIndex = 3;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -107,7 +100,7 @@
             // NAMEtb
             // 
             this.NAMEtb.Location = new System.Drawing.Point(7, 87);
-            this.NAMEtb.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.NAMEtb.Margin = new System.Windows.Forms.Padding(2);
             this.NAMEtb.Name = "NAMEtb";
             this.NAMEtb.Size = new System.Drawing.Size(109, 20);
             this.NAMEtb.TabIndex = 2;
@@ -125,7 +118,7 @@
             // IDtb
             // 
             this.IDtb.Location = new System.Drawing.Point(7, 41);
-            this.IDtb.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.IDtb.Margin = new System.Windows.Forms.Padding(2);
             this.IDtb.Name = "IDtb";
             this.IDtb.Size = new System.Drawing.Size(109, 20);
             this.IDtb.TabIndex = 1;
@@ -143,7 +136,7 @@
             // ADDbtn
             // 
             this.ADDbtn.Location = new System.Drawing.Point(175, 317);
-            this.ADDbtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ADDbtn.Margin = new System.Windows.Forms.Padding(2);
             this.ADDbtn.Name = "ADDbtn";
             this.ADDbtn.Size = new System.Drawing.Size(60, 30);
             this.ADDbtn.TabIndex = 1;
@@ -154,17 +147,18 @@
             // UPDATEbtn
             // 
             this.UPDATEbtn.Location = new System.Drawing.Point(350, 317);
-            this.UPDATEbtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.UPDATEbtn.Margin = new System.Windows.Forms.Padding(2);
             this.UPDATEbtn.Name = "UPDATEbtn";
             this.UPDATEbtn.Size = new System.Drawing.Size(62, 30);
             this.UPDATEbtn.TabIndex = 2;
             this.UPDATEbtn.Text = "UPDATE";
             this.UPDATEbtn.UseVisualStyleBackColor = true;
+            this.UPDATEbtn.Click += new System.EventHandler(this.UPDATEbtn_Click);
             // 
             // DELETEbtn
             // 
             this.DELETEbtn.Location = new System.Drawing.Point(528, 317);
-            this.DELETEbtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.DELETEbtn.Margin = new System.Windows.Forms.Padding(2);
             this.DELETEbtn.Name = "DELETEbtn";
             this.DELETEbtn.Size = new System.Drawing.Size(63, 30);
             this.DELETEbtn.TabIndex = 3;
@@ -174,7 +168,7 @@
             // SUMMARYbtn
             // 
             this.SUMMARYbtn.Location = new System.Drawing.Point(9, 287);
-            this.SUMMARYbtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.SUMMARYbtn.Margin = new System.Windows.Forms.Padding(2);
             this.SUMMARYbtn.Name = "SUMMARYbtn";
             this.SUMMARYbtn.Size = new System.Drawing.Size(65, 30);
             this.SUMMARYbtn.TabIndex = 4;
@@ -185,17 +179,18 @@
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(175, 10);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(416, 296);
             this.dataGridView1.TabIndex = 5;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // SEARCHtb
             // 
             this.SEARCHtb.Location = new System.Drawing.Point(24, 25);
-            this.SEARCHtb.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.SEARCHtb.Margin = new System.Windows.Forms.Padding(2);
             this.SEARCHtb.Name = "SEARCHtb";
             this.SEARCHtb.Size = new System.Drawing.Size(117, 20);
             this.SEARCHtb.TabIndex = 6;
@@ -214,13 +209,20 @@
             // VIEWbtn
             // 
             this.VIEWbtn.Location = new System.Drawing.Point(92, 287);
-            this.VIEWbtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.VIEWbtn.Margin = new System.Windows.Forms.Padding(2);
             this.VIEWbtn.Name = "VIEWbtn";
             this.VIEWbtn.Size = new System.Drawing.Size(63, 30);
             this.VIEWbtn.TabIndex = 8;
             this.VIEWbtn.Text = "VIEW";
             this.VIEWbtn.UseVisualStyleBackColor = true;
             this.VIEWbtn.Click += new System.EventHandler(this.VIEWbtn_Click);
+            // 
+            // AGEtb
+            // 
+            this.AGEtb.Location = new System.Drawing.Point(7, 135);
+            this.AGEtb.Name = "AGEtb";
+            this.AGEtb.Size = new System.Drawing.Size(109, 20);
+            this.AGEtb.TabIndex = 5;
             // 
             // Form1
             // 
@@ -236,13 +238,14 @@
             this.Controls.Add(this.UPDATEbtn);
             this.Controls.Add(this.ADDbtn);
             this.Controls.Add(this.groupBox1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AGEtb)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -256,7 +259,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox COURSEtb;
-        private System.Windows.Forms.TextBox AGEtb;
         private System.Windows.Forms.TextBox NAMEtb;
         private System.Windows.Forms.TextBox IDtb;
         private System.Windows.Forms.Button ADDbtn;
@@ -267,6 +269,7 @@
         private System.Windows.Forms.TextBox SEARCHtb;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button VIEWbtn;
+        private System.Windows.Forms.NumericUpDown AGEtb;
     }
 }
 
