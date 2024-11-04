@@ -9,12 +9,12 @@ namespace StudentManagementSystem
 {
     internal class Read
     {
-        public string filename = @"C:\Users\Cash\OneDrive - belgiumcampus.ac.za\Documents\Belgium\Year2\PRG282\Project\282Project\StudentManagementSystem\Content.txt";
-
+        
+        public string path = Path.GetFullPath("Content.txt");
         public List<string> read()
         {
             List<string> list = new List<string>();
-            list = File.ReadAllLines(filename).ToList();
+            list = File.ReadAllLines(path).ToList();
             return list;
         }
     }
