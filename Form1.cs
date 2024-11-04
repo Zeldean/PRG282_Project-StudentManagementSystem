@@ -139,5 +139,10 @@ namespace StudentManagementSystem
             AGEtb.Text = row.Cells["Age"].Value.ToString();
             COURSEtb.Text = row.Cells["Course"].Value.ToString();
         }
+
+        private void DELETEbtn_Click(object sender, EventArgs e)
+        {           
+                handler.deleteStudent(dataGridView1, studentlist);           
+        }
     }
 }

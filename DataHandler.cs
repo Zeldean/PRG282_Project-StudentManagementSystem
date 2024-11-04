@@ -5,11 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace StudentManagementSystem
 {
     internal class DataHandler
     {
+        Read myReader = new Read();
+        
+
         List<Student> students = new List<Student>();
 
         public List<Student> format(List<string> list)
@@ -112,6 +116,52 @@ namespace StudentManagementSystem
 
             return isValid;
         }
+
+
+
+
+
+        public void deleteStudent(DataGridView DGV, List<Student> StudentList) /// Herman 
+        {
+            if (DGV.SelectedRows.Count > 0)
+            {
+
+                //Get the ID
+                var SelectedRow = DGV.SelectedRows[0];
+                var SelectedStudent = (Student)SelectedRow.DataBoundItem;
+
+                
+
+
+                //filter student then overwrite the file
+                var lines = File.ReadAllLines(myReader.filePath).ToList();
+
+                // Filter out the line that contains the student ID
+                StudentList.RemoveAll(s => s.StudentID == SelectedStudent.StudentID);
+
+                // Overwrite the file with updated data
+                myReader.write(StudentList);
+                DGV.DataSource = null;
+                DGV.DataSource = StudentList;
+
+                //Update the Gridview
+                //Ek weet nie een van ons methods is update ek dink? So > Update()
+
+                MessageBox.Show("Student deleted successfully.");
+            }
+            else
+            {
+                MessageBox.Show("Please select a student to delete.");
+            }
+
+
+        }
+
+        
+
+
+
+
 
 
         public void ShowDuplicatePopup(string duplicateID)
