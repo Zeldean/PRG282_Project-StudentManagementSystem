@@ -30,5 +30,10 @@ namespace StudentManagementSystem
 
             return filterdStudents;
         }
+
+        public static void GetSummary()
+        {
+
+        }
     }
 }

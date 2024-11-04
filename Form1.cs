@@ -13,18 +13,21 @@ namespace StudentManagementSystem
 {
     public partial class Form1 : Form
     {
-        public Form1()
-        {
-            InitializeComponent();
-        }
         public string path = Path.GetFullPath("Content.txt");
         Read myreader = new Read();
         DataHandler handler = new DataHandler();
         BindingSource bs = new BindingSource();
         List<Student> studentlist = new List<Student>();
 
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
         private void VIEWbtn_Click(object sender, EventArgs e)
         {
+            SEARCHtb.Clear();
+
             bs.DataSource = studentlist;
             dataGridView1.DataSource = bs;
         }
@@ -43,17 +46,14 @@ namespace StudentManagementSystem
             dataGridView1.DataSource = bs;
         }
 
-        //<<<<<<< HEAD
-
-        //=======
         private void SEARCHtb_TextChanged(object sender, EventArgs e)
         {
             List<Student> filterdStudentList = DataHandler.FindID(SEARCHtb.Text, studentlist);
             bs.DataSource = filterdStudentList;
 
             dataGridView1.DataSource = bs;
-            //>>>>>>> 5dc56499069c7d0b64960379630717911638db06
         }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             Boolean notexist = !File.Exists(path);
@@ -72,6 +72,11 @@ namespace StudentManagementSystem
                 list = handler.format(myreader.read());
                 studentlist = list;
             }
+        }
+
+        private void SUMMARYbtn_Click(object sender, EventArgs e)
+        {
+            //studentlist.Count
         }
     }
 }
