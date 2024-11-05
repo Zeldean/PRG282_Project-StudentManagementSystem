@@ -45,6 +45,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.VIEWbtn = new System.Windows.Forms.Button();
             this.dgvDataOutput = new System.Windows.Forms.DataGridView();
+            this.btnDiscardChanges = new System.Windows.Forms.Button();
+            this.btnSaveChanges = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AGEtb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDataOutput)).BeginInit();
@@ -224,11 +226,35 @@
             this.dgvDataOutput.TabIndex = 9;
             this.dgvDataOutput.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
+            // btnDiscardChanges
+            // 
+            this.btnDiscardChanges.Location = new System.Drawing.Point(691, 283);
+            this.btnDiscardChanges.Margin = new System.Windows.Forms.Padding(2);
+            this.btnDiscardChanges.Name = "btnDiscardChanges";
+            this.btnDiscardChanges.Size = new System.Drawing.Size(111, 30);
+            this.btnDiscardChanges.TabIndex = 10;
+            this.btnDiscardChanges.Text = "Discard Changes";
+            this.btnDiscardChanges.UseVisualStyleBackColor = true;
+            this.btnDiscardChanges.Click += new System.EventHandler(this.btnDiscardChanges_Click);
+            // 
+            // btnSaveChanges
+            // 
+            this.btnSaveChanges.Location = new System.Drawing.Point(691, 317);
+            this.btnSaveChanges.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSaveChanges.Name = "btnSaveChanges";
+            this.btnSaveChanges.Size = new System.Drawing.Size(111, 30);
+            this.btnSaveChanges.TabIndex = 11;
+            this.btnSaveChanges.Text = "Save Changes";
+            this.btnSaveChanges.UseVisualStyleBackColor = true;
+            this.btnSaveChanges.Click += new System.EventHandler(this.btnSaveChanges_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(814, 366);
+            this.Controls.Add(this.btnSaveChanges);
+            this.Controls.Add(this.btnDiscardChanges);
             this.Controls.Add(this.dgvDataOutput);
             this.Controls.Add(this.VIEWbtn);
             this.Controls.Add(this.label5);
@@ -270,6 +296,8 @@
         private System.Windows.Forms.Button VIEWbtn;
         private System.Windows.Forms.NumericUpDown AGEtb;
         private System.Windows.Forms.DataGridView dgvDataOutput;
+        private System.Windows.Forms.Button btnDiscardChanges;
+        private System.Windows.Forms.Button btnSaveChanges;
     }
 }
 

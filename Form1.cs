@@ -155,5 +155,22 @@ namespace StudentManagementSystem
             AGEtb.Value = 0; // Assuming AGEtb is a NumericUpDown
             COURSEtb.Text = string.Empty;
         }
+
+        private void btnDiscardChanges_Click(object sender, EventArgs e)
+        {
+            dataHandler.Students.Clear();
+            dataHandler.Students = myreader.read();
+
+            bs.DataSource = dataHandler.Students;
+            dgvDataOutput.DataSource = bs;
+
+            MessageBox.Show("Changes has been discarded");
+        }
+
+        private void btnSaveChanges_Click(object sender, EventArgs e)
+        {
+            mywriter.write(dataHandler.Students);
+            MessageBox.Show("Changes has been saved");
+        }
     }
 }
