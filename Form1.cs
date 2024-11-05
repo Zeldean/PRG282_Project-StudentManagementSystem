@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace StudentManagementSystem
 {
-    public partial class Form1 : Form
+    public partial class frmMain : Form
     {
         // Create the read and write objects with the file path
         static string filePath = Path.Combine(".", "Content.txt");
@@ -24,7 +24,7 @@ namespace StudentManagementSystem
         DataHandler dataHandler = new DataHandler();
         BindingSource bs = new BindingSource();
 
-        public Form1()
+        public frmMain()
         {
             InitializeComponent();
         }
@@ -174,6 +174,14 @@ namespace StudentManagementSystem
         {
             mywriter.write(dataHandler.Students);
             MessageBox.Show("Changes has been saved");
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to close. All unsaved changes will be lost", "Close", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Environment.Exit(0);
+            }
         }
     }
 }
