@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -6,16 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.ComponentModel;
 
 namespace StudentManagementSystem
 {
     internal class DataHandler
     {
-        Read myReader = new Read();
-        
-
         List<Student> students = new List<Student>();
-
+        Read reader = new Read();
+        Write writer = new Write();
         public List<Student> format(List<string> list)
         {
             foreach (string item in list)
@@ -25,7 +24,6 @@ namespace StudentManagementSystem
                 students.Add(person);
             }
             return students;
-
         }
 
         public static List<Student> FindID(string ID, List<Student> students)
@@ -49,7 +47,6 @@ namespace StudentManagementSystem
 
             return (numberOfStudents, avgAge);
         }
-
 
 
         public bool Validations(TextBox txtID, TextBox txtName, NumericUpDown txtAge, TextBox txtCource)
@@ -132,52 +129,6 @@ namespace StudentManagementSystem
         }
 
 
-
-
-
-        public void deleteStudent(DataGridView DGV, List<Student> StudentList) /// Herman 
-        {
-            if (DGV.SelectedRows.Count > 0)
-            {
-
-                //Get the ID
-                var SelectedRow = DGV.SelectedRows[0];
-                var SelectedStudent = (Student)SelectedRow.DataBoundItem;
-
-                
-
-
-                //filter student then overwrite the file
-                var lines = File.ReadAllLines(myReader.filePath).ToList();
-
-                // Filter out the line that contains the student ID
-                StudentList.RemoveAll(s => s.StudentID == SelectedStudent.StudentID);
-
-                // Overwrite the file with updated data
-                myReader.write(StudentList);
-                DGV.DataSource = null;
-                DGV.DataSource = StudentList;
-
-                //Update the Gridview
-                //Ek weet nie een van ons methods is update ek dink? So > Update()
-
-                MessageBox.Show("Student deleted successfully.");
-            }
-            else
-            {
-                MessageBox.Show("Please select a student to delete.");
-            }
-
-
-        }
-
-        
-
-
-
-
-
-
         public void ShowDuplicatePopup(string duplicateID)
         {
             var duplicates = students.Where(s => s.StudentID == duplicateID).ToList();
@@ -203,6 +154,31 @@ namespace StudentManagementSystem
             duplicateForm.Controls.Add(listBox);
             duplicateForm.ShowDialog();
         }
+
+
+
+        public void deleteStudent(DataGridView DGV, List<Student> studentList)
+        {
+            if (DGV.SelectedRows.Count > 0)
+            {
+                var selectedRow = DGV.SelectedRows[0];
+                var selectedStudent = (Student)selectedRow.DataBoundItem;
+
+                studentList.RemoveAll(s => s.StudentID == selectedStudent.StudentID);
+                writer.write(studentList);
+
+                // Refresh DataGridView
+                DGV.DataSource = null;
+                DGV.DataSource = studentList;
+                MessageBox.Show("Student deleted successfully");
+            }
+            else
+            {
+                MessageBox.Show("Please select a student to delete.");
+            }
+        }
+
+
 
     }
 }
