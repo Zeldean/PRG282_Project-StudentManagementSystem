@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,19 +9,22 @@ namespace StudentManagementSystem
 {
     internal class Read
     {
-        
-        public string filePath = Path.GetFullPath("Content.txt");
-        public List<string> read()
+        public string filePath = Path.Combine(".", "Content.txt");   //made a global Path to the Folder so it is accessable by handler.FilePath instead of having multiple 
+
+        public Read()
         {
-            List<string> list = new List<string>();
-            list = File.ReadAllLines(filePath).ToList();
-            return list;
+            // Check if the file exists; if not, create it
+            if (!File.Exists(filePath))
+            {
+                File.Create(filePath).Dispose(); // Create the file and immediately dispose of the file stream
+            }
         }
 
-        public void write(List<Student> studentlist)
+        public List<string> read()
         {
-            var lines = studentlist.Select(s => $"{s.StudentID},{s.Name},{s.Age},{s.Course}").ToArray();
-            File.WriteAllLines(filePath, lines);
+            // Read all lines from the file into a list
+            List<string> list = File.ReadAllLines(filePath).ToList();
+            return list;
         }
     }
 }
