@@ -106,6 +106,9 @@ namespace StudentManagementSystem
             }
 
             MessageBox.Show("Summary report has been generated successfully.");
+
+            lblStdCount.Text = studentCount.ToString();
+            lblAvgAge.Text = Math.Round(averageAge).ToString();
         }
 
         private void UpdateRow() ///JpSeaman

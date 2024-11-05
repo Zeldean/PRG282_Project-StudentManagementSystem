@@ -47,6 +47,10 @@
             this.dgvDataOutput = new System.Windows.Forms.DataGridView();
             this.btnDiscardChanges = new System.Windows.Forms.Button();
             this.btnSaveChanges = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.lblAvgAge = new System.Windows.Forms.Label();
+            this.lblStdCount = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AGEtb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDataOutput)).BeginInit();
@@ -228,7 +232,7 @@
             // 
             // btnDiscardChanges
             // 
-            this.btnDiscardChanges.Location = new System.Drawing.Point(691, 283);
+            this.btnDiscardChanges.Location = new System.Drawing.Point(691, 291);
             this.btnDiscardChanges.Margin = new System.Windows.Forms.Padding(2);
             this.btnDiscardChanges.Name = "btnDiscardChanges";
             this.btnDiscardChanges.Size = new System.Drawing.Size(111, 30);
@@ -239,7 +243,7 @@
             // 
             // btnSaveChanges
             // 
-            this.btnSaveChanges.Location = new System.Drawing.Point(691, 317);
+            this.btnSaveChanges.Location = new System.Drawing.Point(691, 325);
             this.btnSaveChanges.Margin = new System.Windows.Forms.Padding(2);
             this.btnSaveChanges.Name = "btnSaveChanges";
             this.btnSaveChanges.Size = new System.Drawing.Size(111, 30);
@@ -248,11 +252,59 @@
             this.btnSaveChanges.UseVisualStyleBackColor = true;
             this.btnSaveChanges.Click += new System.EventHandler(this.btnSaveChanges_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(203, 271);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(96, 16);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "Total Students:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(391, 271);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(90, 16);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Average Age:";
+            // 
+            // lblAvgAge
+            // 
+            this.lblAvgAge.AutoSize = true;
+            this.lblAvgAge.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAvgAge.Location = new System.Drawing.Point(485, 271);
+            this.lblAvgAge.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblAvgAge.Name = "lblAvgAge";
+            this.lblAvgAge.Size = new System.Drawing.Size(15, 16);
+            this.lblAvgAge.TabIndex = 13;
+            this.lblAvgAge.Text = "0";
+            // 
+            // lblStdCount
+            // 
+            this.lblStdCount.AutoSize = true;
+            this.lblStdCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStdCount.Location = new System.Drawing.Point(303, 271);
+            this.lblStdCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblStdCount.Name = "lblStdCount";
+            this.lblStdCount.Size = new System.Drawing.Size(15, 16);
+            this.lblStdCount.TabIndex = 14;
+            this.lblStdCount.Text = "0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(814, 366);
+            this.Controls.Add(this.lblStdCount);
+            this.Controls.Add(this.lblAvgAge);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.btnSaveChanges);
             this.Controls.Add(this.btnDiscardChanges);
             this.Controls.Add(this.dgvDataOutput);
@@ -298,6 +350,10 @@
         private System.Windows.Forms.DataGridView dgvDataOutput;
         private System.Windows.Forms.Button btnDiscardChanges;
         private System.Windows.Forms.Button btnSaveChanges;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblAvgAge;
+        private System.Windows.Forms.Label lblStdCount;
     }
 }
 
