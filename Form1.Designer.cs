@@ -44,10 +44,10 @@
             this.SEARCHtb = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.VIEWbtn = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvDataOutput = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AGEtb)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDataOutput)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -215,21 +215,21 @@
             this.VIEWbtn.UseVisualStyleBackColor = true;
             this.VIEWbtn.Click += new System.EventHandler(this.VIEWbtn_Click);
             // 
-            // dataGridView1
+            // dgvDataOutput
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(204, 25);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(373, 243);
-            this.dataGridView1.TabIndex = 9;
-            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dgvDataOutput.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDataOutput.Location = new System.Drawing.Point(204, 25);
+            this.dgvDataOutput.Name = "dgvDataOutput";
+            this.dgvDataOutput.Size = new System.Drawing.Size(598, 243);
+            this.dgvDataOutput.TabIndex = 9;
+            this.dgvDataOutput.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(600, 366);
-            this.Controls.Add(this.dataGridView1);
+            this.ClientSize = new System.Drawing.Size(814, 366);
+            this.Controls.Add(this.dgvDataOutput);
             this.Controls.Add(this.VIEWbtn);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.SEARCHtb);
@@ -245,7 +245,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AGEtb)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDataOutput)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -269,7 +269,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button VIEWbtn;
         private System.Windows.Forms.NumericUpDown AGEtb;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvDataOutput;
     }
 }
 

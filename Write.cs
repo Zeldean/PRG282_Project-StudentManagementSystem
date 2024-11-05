@@ -10,13 +10,17 @@ namespace StudentManagementSystem
 {
     internal class Write
     {
-        public string filePath = Path.Combine(".", "Content.txt");
+        string filePath;
+
+        public Write(string filePath)
+        {
+            this.filePath = filePath;
+        }
+
         public void write(List<Student> studentlist)
         {
             var lines = studentlist.Select(s => $"{s.StudentID},{s.Name},{s.Age},{s.Course}").ToArray();
-             File.WriteAllLines(filePath, lines);
-        }
-        
-        
+            File.WriteAllLines(this.filePath, lines);
+        }        
     }
 }

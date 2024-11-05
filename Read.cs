@@ -9,22 +9,26 @@ namespace StudentManagementSystem
 {
     internal class Read
     {
-        public string filePath = Path.Combine(".", "Content.txt");   //made a global Path to the Folder so it is accessable by handler.FilePath instead of having multiple 
+        string filePath;
 
-        public Read()
+        public Read(string filePath)
         {
-            // Check if the file exists; if not, create it
-            if (!File.Exists(filePath))
-            {
-                File.Create(filePath).Dispose(); // Create the file and immediately dispose of the file stream
-            }
+            this.filePath = filePath;
         }
 
-        public List<string> read()
+        public List<Student> read()
         {
-            // Read all lines from the file into a list
+            List<Student> students = new List<Student>();
             List<string> list = File.ReadAllLines(filePath).ToList();
-            return list;
+
+            foreach (string item in list)
+            {
+                string[] items = item.Split(',');
+                Student person = new Student(items[0], items[1], Convert.ToInt32(items[2]), items[3]);
+                students.Add(person);
+            }
+            
+            return students;
         }
     }
 }

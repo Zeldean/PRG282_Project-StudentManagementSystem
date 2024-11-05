@@ -13,19 +13,16 @@ namespace StudentManagementSystem
     internal class DataHandler
     {
         List<Student> students = new List<Student>();
-        Read reader = new Read();
-        Write writer = new Write();
-        public List<Student> format(List<string> list)
+
+        public DataHandler() { }
+        public DataHandler(List<Student> students)
         {
-            foreach (string item in list)
-            {
-                string[] items = item.Split(',');
-                Student person = new Student(items[0], items[1], Convert.ToInt32(items[2]), items[3]);
-                students.Add(person);
-            }
-            return students;
+            this.students = students;
         }
 
+        public List<Student> Students { get => students; set => students = value; }
+            
+        // Methods
         public static List<Student> FindID(string ID, List<Student> students)
         {
             List<Student> filterdStudents = students.Where((student) =>
@@ -35,7 +32,6 @@ namespace StudentManagementSystem
 
             return filterdStudents;
         }
-
 
         public static (int StudentCount, float AverageAge) GetSummary(List<Student> students)
         {
@@ -47,7 +43,6 @@ namespace StudentManagementSystem
 
             return (numberOfStudents, avgAge);
         }
-
 
         public bool Validations(TextBox txtID, TextBox txtName, NumericUpDown txtAge, TextBox txtCource)
         {
@@ -128,7 +123,6 @@ namespace StudentManagementSystem
             return isValid;
         }
 
-
         public void ShowDuplicatePopup(string duplicateID)
         {
             var duplicates = students.Where(s => s.StudentID == duplicateID).ToList();
@@ -155,8 +149,6 @@ namespace StudentManagementSystem
             duplicateForm.ShowDialog();
         }
 
-
-
         public void deleteStudent(DataGridView DGV, List<Student> studentList)
         {
             if (DGV.SelectedRows.Count > 0)
@@ -165,7 +157,6 @@ namespace StudentManagementSystem
                 var selectedStudent = (Student)selectedRow.DataBoundItem;
 
                 studentList.RemoveAll(s => s.StudentID == selectedStudent.StudentID);
-                writer.write(studentList);
 
                 // Refresh DataGridView
                 DGV.DataSource = null;
@@ -177,8 +168,5 @@ namespace StudentManagementSystem
                 MessageBox.Show("Please select a student to delete.");
             }
         }
-
-
-
     }
 }
