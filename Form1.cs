@@ -60,13 +60,12 @@ namespace StudentManagementSystem
             }
         }
 
-
-        private void UPDATEbtn_Click_1(object sender, EventArgs e)
+        private void UPDATEbtn_Click(object sender, EventArgs e)
         {
             UpdateRow();
         }
 
-        private void dataGridView1_CellClick_1(object sender, DataGridViewCellEventArgs e) ///JpSeaman
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             DataGridViewRow row = dataGridView1.Rows[e.RowIndex];  //Get the index of the clicked cell/row
             IDtb.Text = row.Cells["StudentID"].Value.ToString();
@@ -74,7 +73,6 @@ namespace StudentManagementSystem
             AGEtb.Text = row.Cells["Age"].Value.ToString();
             COURSEtb.Text = row.Cells["Course"].Value.ToString();
         }
-
 
         private void UpdateRow() ///JpSeaman
         {
@@ -127,11 +125,10 @@ namespace StudentManagementSystem
         private void DELETEbtn_Click(object sender, EventArgs e)
         {
            handler.deleteStudent(dataGridView1,studentlist);
-           ClearTextBoxes() ;
+            ClearTextBoxes();
         }
 
-
-        private void SEARCHtb_TextChanged_1(object sender, EventArgs e)
+        private void SEARCHtb_TextChanged(object sender, EventArgs e)
         {
             List<Student> filterdStudentList = DataHandler.FindID(SEARCHtb.Text, studentlist);
             bs.DataSource = filterdStudentList;
@@ -139,7 +136,8 @@ namespace StudentManagementSystem
             dataGridView1.DataSource = bs;
         }
 
-        private void SUMMARYbtn_Click_1(object sender, EventArgs e)
+
+        private void SUMMARYbtn_Click(object sender, EventArgs e)
         {
             var (studentCount, averageAge) = DataHandler.GetSummary(studentlist);
 
