@@ -71,11 +71,24 @@ namespace StudentManagementSystem
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            DataGridViewRow row = dgvDataOutput.Rows[e.RowIndex];  //Get the index of the clicked cell/row
-            IDtb.Text = row.Cells["StudentID"].Value.ToString();
-            NAMEtb.Text = row.Cells["Name"].Value.ToString();
-            AGEtb.Text = row.Cells["Age"].Value.ToString();
-            COURSEtb.Text = row.Cells["Course"].Value.ToString();
+            try
+            {
+                // Check if the clicked row is valid
+                if (e.RowIndex >= 0)
+                {
+                    DataGridViewRow row = dgvDataOutput.Rows[e.RowIndex];  // Get the index of the clicked cell/row
+
+                    // Check for null cells to avoid NullReferenceException
+                    IDtb.Text = row.Cells["StudentID"].Value?.ToString();
+                    NAMEtb.Text = row.Cells["Name"].Value?.ToString();
+                    AGEtb.Text = row.Cells["Age"].Value?.ToString();
+                    COURSEtb.Text = row.Cells["Course"].Value?.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Unexpected error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         
         private void DELETEbtn_Click(object sender, EventArgs e)
@@ -182,6 +195,11 @@ namespace StudentManagementSystem
             {
                 Environment.Exit(0);
             }
+        }
+
+        private void dgvDataOutput_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
