@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -17,20 +18,21 @@ namespace StudentManagementSystem
     public partial class frmMain : Form
     {
         // Create the read and write objects with the file path
-        static string filePath = Path.Combine(".", "Content.txt");
+        static string filePath = Path.Combine(".", "Student.txt");
         Read myreader = new Read(filePath);
         Write mywriter = new Write(filePath);
-        
-
 
         // Create the dataHandler object
         DataHandler dataHandler = new DataHandler();
         BindingSource bs = new BindingSource();
 
+        List<(string Action, string StudentID, DateTime Timestamp)> ProgressList = new List<(string, string, DateTime)>();
+
+
         public frmMain()
         {
             InitializeComponent();
-            
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -40,13 +42,55 @@ namespace StudentManagementSystem
             {
                 File.Create(filePath).Close();
                 dataHandler.Students.Clear();
-                return;
+                //return;
             }
             dataHandler.Students = myreader.read();
+
+            string databasePath = Path.Combine(Application.StartupPath, "SMSLogs.db");
+
+            // Check if the database file already exists
+            if (!File.Exists(databasePath))
+            {
+                // Create the database file
+                SQLiteConnection.CreateFile(databasePath);
+                MessageBox.Show("Database created at " + databasePath);
+
+               
+                // Initialize the database with the Logs table
+                using (SQLiteConnection connection = new SQLiteConnection("Data Source=" + databasePath + ";Version=3;"))
+                {
+                    connection.Open();
+
+                    // Create the Logs table
+                    string createLogsTable = @"
+                    CREATE TABLE IF NOT EXISTS Logs (
+                    LogID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Action TEXT NOT NULL,
+                    StudentID TEXT NOT NULL,
+                    Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (StudentID) REFERENCES Users(Id)
+                    );";
+
+                    using (SQLiteCommand command = new SQLiteCommand(createLogsTable, connection))
+                    {
+                        command.ExecuteNonQuery();
+                        MessageBox.Show("Table 'Logs' created.");
+                    }
+                }
+                
+            }
+            else
+            {
+                Console.WriteLine("Database already exists.");
+            }
+
+
         }
 
 
-       
+
+
+
         private void VIEWbtn_Click(object sender, EventArgs e)
         {
             SEARCHtb.Clear();
@@ -67,6 +111,8 @@ namespace StudentManagementSystem
                 bs.DataSource = dataHandler.Students; // Update data source
                 dgvDataOutput.DataSource = bs; // Refresh the DataGridView
                 ClearTextBoxes();
+                dataHandler.LogData("Student Added", IDtb.Text);
+                ProgressList = dataHandler.logList;
             }
         }
 
@@ -99,7 +145,9 @@ namespace StudentManagementSystem
         
         private void DELETEbtn_Click(object sender, EventArgs e)
         {
-           dataHandler.deleteStudent(dgvDataOutput,dataHandler.Students);
+            dataHandler.deleteStudent(dgvDataOutput,dataHandler.Students);
+            dataHandler.LogData("Deleted Student", IDtb.Text);
+            ProgressList = dataHandler.logList;
             ClearTextBoxes();
         }
 
@@ -162,6 +210,8 @@ namespace StudentManagementSystem
                 // Write the updated list to a file
                 //File.WriteAllLines(filePath, updatedList);
                 //ClearTextBoxes();
+                dataHandler.LogData("Updated Student", newID);
+                ProgressList = dataHandler.logList;
                 MessageBox.Show("Sucessdully updated Student Information");
             }
             else
@@ -192,6 +242,8 @@ namespace StudentManagementSystem
         private void btnSaveChanges_Click(object sender, EventArgs e)
         {
             mywriter.write(dataHandler.Students);
+            dataHandler.LogToDataBase(ProgressList);
+            dataHandler.ReadLogsFromDatabase();
             MessageBox.Show("Changes has been saved");
         }
 

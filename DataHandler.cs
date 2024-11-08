@@ -8,12 +8,15 @@ using System.Windows.Forms;
 using System.IO;
 using System.ComponentModel;
 using System.Data.SqlClient;
+using System.Data.SQLite;
 
 namespace StudentManagementSystem
 {
     internal class DataHandler
     {
         List<Student> students = new List<Student>();
+        static string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        static string databasePath = Path.Combine(appDirectory, "SMSLogs.db");
 
         public DataHandler() { }
         public DataHandler(List<Student> students)
@@ -22,7 +25,7 @@ namespace StudentManagementSystem
         }
 
         public List<Student> Students { get => students; set => students = value; }
-            
+
         // Methods
         public static List<Student> FindID(string ID, List<Student> students)
         {
@@ -171,31 +174,100 @@ namespace StudentManagementSystem
             }
         }
 
+        public List<(string Action, string StudentID, DateTime Timestamp)> logList = new List<(string, string, DateTime)>();
 
-        
-        public List<string> LogData (string action)
+        public void LogData(string action, string studentId)
         {
-            List<string> LogList = new List<string>();
+
             if (!string.IsNullOrEmpty(action))
             {
-                LogList.Add(action);
+                // Add log entry with current timestamp
+                logList.Add((action, studentId, DateTime.Now));
             }
-            return LogList;
         }
 
 
-        public void LogToDataBase(List<string> list)
+
+        public void LogToDataBase(List<(string Action, string StudentID, DateTime Timestamp)> logList)
         {
-            string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string databasePath = Path.Combine(appDirectory, "MyDatabase.mdf");
 
-            if (Directory.Exists(databasePath))
+
+            // Check if the database exists
+            if (File.Exists(databasePath))
             {
-                //using (SqlDataAdapter adapter = new SqlDataAdapter()) ;
+                using (SQLiteConnection connection = new SQLiteConnection("Data Source=" + databasePath + ";Version=3;"))
+                {
+                    connection.Open();
+
+                    foreach (var log in logList)
+                    {
+                        string insertLogQuery = @"
+                INSERT INTO Logs (Action, StudentID, Timestamp)
+                VALUES (@Action, @StudentID, @Timestamp);";
+
+                        using (SQLiteCommand command = new SQLiteCommand(insertLogQuery, connection))
+                        {
+                            command.Parameters.AddWithValue("@Action", log.Action);
+                            command.Parameters.AddWithValue("@StudentID", log.StudentID);
+                            command.Parameters.AddWithValue("@Timestamp", log.Timestamp);
+
+                            command.ExecuteNonQuery();
+                        }
+                    }
+
+                    MessageBox.Show("Log data written to the database.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Database not found at " + databasePath);
             }
         }
-        
+
+
+
+        public void ReadLogsFromDatabase()
+        {
+
+            if (File.Exists(databasePath))
+            {
+                using (SQLiteConnection connection = new SQLiteConnection("Data Source=" + databasePath + ";Version=3;"))
+                {
+                    connection.Open();
+                    string selectQuery = "SELECT LogID, Action, StudentID, Timestamp FROM Logs;";
+                    string allLogs = "LogID | Action | StudentID | Timestamp\n";
+                    allLogs += "--------------------------------------\n";
+
+                    using (SQLiteCommand command = new SQLiteCommand(selectQuery, connection))
+                    {
+                        using (SQLiteDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                int logId = reader.GetInt32(0);
+                                string action = reader.GetString(1);
+                                string studentId = reader.GetString(2);
+                                DateTime timestamp = reader.GetDateTime(3);
+
+                                allLogs += $"{logId} | {action} | {studentId} | {timestamp}\n";
+                            }
+                        }
+                    }
+
+                    // Display all logs in a single MessageBox
+                    MessageBox.Show(allLogs, "Logs from Database");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Database not found at " + databasePath);
+            }
+        }
+
 
 
     }
+
+
+
 }
