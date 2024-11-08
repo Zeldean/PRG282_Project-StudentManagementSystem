@@ -9,6 +9,7 @@ using System.IO;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Data.SQLite;
+using System.Text.RegularExpressions;
 
 namespace StudentManagementSystem
 {
@@ -50,7 +51,7 @@ namespace StudentManagementSystem
             return (numberOfStudents, avgAge);
         }
 
-        public bool Validations(TextBox txtID, TextBox txtName, NumericUpDown txtAge, TextBox txtCource)
+        public bool Validations(TextBox txtID, TextBox txtName, TextBox txtSurname, NumericUpDown txtAge, MaskedTextBox txtPhoneNumber, TextBox txtCource)
         {
             bool isValid = true;
             List<string> errorMessages = new List<string>();
@@ -68,7 +69,7 @@ namespace StudentManagementSystem
                 txtID.BackColor = Color.White; // Reset if valid
             }
 
-            // Validate Name
+            // Validate Name and capitalize first letter
             if (string.IsNullOrEmpty(txtName.Text))
             {
                 txtName.BackColor = Color.Red;
@@ -77,7 +78,23 @@ namespace StudentManagementSystem
             }
             else
             {
+                // Capitalize first letter of the name
+                txtName.Text = char.ToUpper(txtName.Text[0]) + txtName.Text.Substring(1).ToLower();
                 txtName.BackColor = Color.White;
+            }
+
+            // Validate Surname and capitalize first letter
+            if (string.IsNullOrEmpty(txtSurname.Text))
+            {
+                txtSurname.BackColor = Color.Red;
+                errorMessages.Add("Surname cannot be empty.");
+                isValid = false;
+            }
+            else
+            {
+                // Capitalize first letter of the surname
+                txtSurname.Text = char.ToUpper(txtSurname.Text[0]) + txtSurname.Text.Substring(1).ToLower();
+                txtSurname.BackColor = Color.White;
             }
 
             // Validate Age
@@ -104,6 +121,30 @@ namespace StudentManagementSystem
                 txtCource.BackColor = Color.White;
             }
 
+            // Validate Phone Number (MaskedTextBox)
+            if (string.IsNullOrEmpty(txtPhoneNumber.Text) || txtPhoneNumber.MaskFull == false)
+            {
+                txtPhoneNumber.BackColor = Color.Red;
+                errorMessages.Add("Phone number cannot be empty.");
+                isValid = false;
+            }
+            else
+            {
+                // Ensure phone number length is exactly correct (including format characters)
+                string phoneNumber = txtPhoneNumber.Text;
+                if (phoneNumber.Length != 14)
+                {
+                    txtPhoneNumber.BackColor = Color.Red;
+                    errorMessages.Add("Phone number must be exactly 10 characters long.");
+                    isValid = false;
+                }
+                else
+                {
+                    txtPhoneNumber.BackColor = Color.White;
+                }
+                
+            }
+
             // Check for duplicate IDs
             var duplicateStudent = students.FirstOrDefault(s => s.StudentID == txtID.Text);
             if (duplicateStudent != null)
@@ -128,6 +169,10 @@ namespace StudentManagementSystem
 
             return isValid;
         }
+
+
+
+
         // Method to display a popup when duplicate student IDs are found
         public void ShowDuplicatePopup(string duplicateID)
         {
@@ -185,75 +230,87 @@ namespace StudentManagementSystem
             try
             {
                 if (!string.IsNullOrEmpty(action))
-                 {
-                // Add log entry with current timestamp
-                logList.Add((action, studentId, DateTime.Now));
-                 }
+                {
+                    // Add log entry with current timestamp
+                    logList.Add((action, studentId, DateTime.Now));
+                }
 
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred while logging data: {ex.Message}");
-            
-             }
-
-
-
+            }
         }
 
 
 
         public void LogToDataBase(List<(string Action, string StudentID, DateTime Timestamp)> logList)
         {
-
             try
             {
                 // Check if the database exists
-            if (File.Exists(databasePath))
-            {
-                using (SQLiteConnection connection = new SQLiteConnection("Data Source=" + databasePath + ";Version=3;"))
+                if (File.Exists(databasePath))
                 {
-                    connection.Open();
-
-                    foreach (var log in logList)
+                    using (SQLiteConnection connection = new SQLiteConnection("Data Source=" + databasePath + ";Version=3;"))
                     {
-                        string insertLogQuery = @"
-                INSERT INTO Logs (Action, StudentID, Timestamp)
-                VALUES (@Action, @StudentID, @Timestamp);";
+                        connection.Open();
 
-                        using (SQLiteCommand command = new SQLiteCommand(insertLogQuery, connection))
+                        foreach (var log in logList)
                         {
-                            command.Parameters.AddWithValue("@Action", log.Action);
-                            command.Parameters.AddWithValue("@StudentID", log.StudentID);
-                            command.Parameters.AddWithValue("@Timestamp", log.Timestamp);
+                            // First check if this log entry already exists
+                            string checkLogQuery = @"
+                                                        SELECT COUNT(*) FROM Logs 
+                                                        WHERE Action = @Action 
+                                                        AND StudentID = @StudentID 
+                                                        AND Timestamp = @Timestamp;";
 
-                            command.ExecuteNonQuery();
+                            using (SQLiteCommand checkCommand = new SQLiteCommand(checkLogQuery, connection))
+                            {
+                                checkCommand.Parameters.AddWithValue("@Action", log.Action);
+                                checkCommand.Parameters.AddWithValue("@StudentID", log.StudentID);
+                                checkCommand.Parameters.AddWithValue("@Timestamp", log.Timestamp);
+
+                                // Execute the query to check for duplicates
+                                long logCount = (long)checkCommand.ExecuteScalar();
+
+                                // If no such log exists, insert the new log
+                                if (logCount == 0)
+                                {
+                                    string insertLogQuery = @"
+                                                                INSERT INTO Logs (Action, StudentID, Timestamp)
+                                                                VALUES (@Action, @StudentID, @Timestamp);";
+
+                                    using (SQLiteCommand command = new SQLiteCommand(insertLogQuery, connection))
+                                    {
+                                        command.Parameters.AddWithValue("@Action", log.Action);
+                                        command.Parameters.AddWithValue("@StudentID", log.StudentID);
+                                        command.Parameters.AddWithValue("@Timestamp", log.Timestamp);
+
+                                        command.ExecuteNonQuery();
+                                    }
+                                }
+                                else
+                                {
+                                    // Log entry already exists
+                                    Console.WriteLine("Duplicate log entry found. Skipping insert.");
+                                }
+                            }
                         }
+
+                        MessageBox.Show("Log data written to the database.");
                     }
-
-                    MessageBox.Show("Log data written to the database.");
                 }
-            }
-                 else
-                 {
-                Console.WriteLine("Database not found at " + databasePath);
-                 }
-
+                else
+                {
+                    Console.WriteLine("Database not found at " + databasePath);
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred while logging data to the database: {ex.Message}");
-
             }
-
-
-
-           
-
-
-
-
         }
+
 
 
 
@@ -268,8 +325,8 @@ namespace StudentManagementSystem
                 {
                     connection.Open();
                     string selectQuery = "SELECT LogID, Action, StudentID, Timestamp FROM Logs;";
-                    string allLogs = "LogID | Action | StudentID | Timestamp\n";
-                    allLogs += "--------------------------------------\n";
+                    string allLogs = "LogID \t Action \t\t StudentID \t Timestamp\n";
+                    allLogs += "-------------------------------------------------------------\n";
 
                     using (SQLiteCommand command = new SQLiteCommand(selectQuery, connection))
                     {
@@ -282,7 +339,7 @@ namespace StudentManagementSystem
                                 string studentId = reader.GetString(2);
                                 DateTime timestamp = reader.GetDateTime(3);
 
-                                allLogs += $"{logId} | {action} | {studentId} | {timestamp}\n";
+                                allLogs += $"|{logId} |\t {action} |\t {studentId} |\t {timestamp}|\n";
                             }
                         }
                     }
@@ -302,21 +359,6 @@ namespace StudentManagementSystem
 
                 Console.WriteLine($"An error occurred while reading logs from the database: {ex.Message}");
             }
-
-
-
-
-
-
-
-
-           
         }
-
-
-
     }
-
-
-
 }

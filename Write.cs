@@ -23,7 +23,7 @@ namespace StudentManagementSystem
             {
                 if (studentlist != null)  // Ensure the student list is not null before proceeding
                 {
-                    var lines = studentlist.Select(s => $"{s.StudentID},{s.Name},{s.Age},{s.Course}").ToArray();  // Create an array of strings where each student's data is formatted as "ID,Name,Age,Course"
+                    var lines = studentlist.Select(s => $"{s.StudentID},{s.Name},{s.Surname},{s.Age},{s.PhoneNumber},{s.Course}").ToArray();  // Create an array of strings where each student's data is formatted as "ID,Name,Age,Course"
                     File.WriteAllLines(this.filePath, lines);  // Write all lines to the specified file
                 }
             }

@@ -101,16 +101,16 @@ namespace StudentManagementSystem
         private void ADDbtn_Click(object sender, EventArgs e)
         {
             // Call validation method
-            if (dataHandler.Validations(IDtb, NAMEtb, AGEtb, COURSEtb))
+            if (dataHandler.Validations(IDtb, NAMEtb,Surnametb, AGEtb, PHONEtb, COURSEtb))
             {
                 //add the student if validations are successful
-                dataHandler.Students.Add(new Student(IDtb.Text, NAMEtb.Text, (int)AGEtb.Value, COURSEtb.Text));
+                dataHandler.Students.Add(new Student(IDtb.Text, NAMEtb.Text, Surnametb.Text,(int)AGEtb.Value, PHONEtb.Text, COURSEtb.Text));
                 bs.DataSource = null; // Clear previous data source
                 bs.DataSource = dataHandler.Students; // Update data source
                 dgvDataOutput.DataSource = bs; // Refresh the DataGridView
-                ClearTextBoxes();
                 dataHandler.LogData("Student Added", IDtb.Text);
                 ProgressList = dataHandler.logList;
+                ClearTextBoxes();
             }
         }
 
@@ -131,7 +131,9 @@ namespace StudentManagementSystem
                     // Check for null cells to avoid NullReferenceException
                     IDtb.Text = row.Cells["StudentID"].Value?.ToString();
                     NAMEtb.Text = row.Cells["Name"].Value?.ToString();
+                    Surnametb.Text = row.Cells["Surname"].Value?.ToString();
                     AGEtb.Text = row.Cells["Age"].Value?.ToString();
+                    PHONEtb.Text = row.Cells["PhoneNumber"].Value?.ToString();
                     COURSEtb.Text = row.Cells["Course"].Value?.ToString();
                 }
             }
@@ -193,24 +195,26 @@ namespace StudentManagementSystem
                     return; // Exit if the ID already exists
                 }
 
-                // Update the cells in the DataGridView with the new values
-                selectedRow.Cells["StudentID"].Value = newID;
-                selectedRow.Cells["Name"].Value = NAMEtb.Text;
-                selectedRow.Cells["Age"].Value = AGEtb.Text;
-                selectedRow.Cells["Course"].Value = COURSEtb.Text;
+                    // Update the cells in the DataGridView with the new values
+                    selectedRow.Cells["StudentID"].Value = newID;
+                    selectedRow.Cells["Name"].Value = NAMEtb.Text;
+                    selectedRow.Cells["Surname"].Value = Surnametb.Text;
+                    selectedRow.Cells["Age"].Value = AGEtb.Text;
+                    selectedRow.Cells["PhoneNumber"].Value = PHONEtb.Text;
+                    selectedRow.Cells["Course"].Value = COURSEtb.Text;
 
-                List<string> updatedList = new List<string>();
-                foreach (Student student in dataHandler.Students)
-                {
-                    updatedList.Add($"{student.StudentID},{student.Name},{student.Age},{student.Course}");
-                }
+                    List<string> updatedList = new List<string>();
+                    foreach (Student student in dataHandler.Students)
+                    {
+                        updatedList.Add($"{student.StudentID},{student.Name},{student.Surname},{student.Age},{student.PhoneNumber},{student.Course}");
+                    }
 
-                // Write the updated list to a file
-                //File.WriteAllLines(filePath, updatedList);
-                //ClearTextBoxes();
-                dataHandler.LogData("Updated Student", newID);
-                ProgressList = dataHandler.logList;
-                MessageBox.Show("Sucessdully updated Student Information");
+                    ClearTextBoxes();
+                    dataHandler.LogData("Updated Student", newID);
+                    ProgressList = dataHandler.logList;
+                    MessageBox.Show("Sucessdully updated Student Information");
+                
+
             }
             else
             {
@@ -222,7 +226,9 @@ namespace StudentManagementSystem
         {
             IDtb.Text = string.Empty;
             NAMEtb.Text = string.Empty;
-            AGEtb.Value = 0; // Assuming AGEtb is a NumericUpDown
+            Surnametb.Text = string.Empty;
+            AGEtb.Value = 0; 
+            PHONEtb.Text = string.Empty;
             COURSEtb.Text = string.Empty;
         }
 

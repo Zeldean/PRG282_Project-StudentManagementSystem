@@ -26,7 +26,7 @@ namespace StudentManagementSystem
                 foreach (string item in list)
                {
                 string[] items = item.Split(','); // Split the line by commas to separate the student properties
-                    Student person = new Student(items[0], items[1], Convert.ToInt32(items[2]), items[3]);  // Create a new Student object using the split data (name, surname, age, grade)
+                    Student person = new Student(items[0], items[1], items[2], Convert.ToInt32(items[3]), items[4], items[5]);  // Create a new Student object using the split data (name, surname, age, grade)
                     students.Add(person);
                }
 
