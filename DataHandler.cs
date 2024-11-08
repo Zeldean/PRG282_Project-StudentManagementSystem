@@ -27,23 +27,24 @@ namespace StudentManagementSystem
         public List<Student> Students { get => students; set => students = value; }
 
         // Methods
+        // Method to find students whose ID contains a given string
         public static List<Student> FindID(string ID, List<Student> students)
         {
-
-            List<Student> filterdStudents = students.Where((student) =>
+            // Use LINQ to filter the list of students based on the provided ID
+            List<Student> filterdStudents = students.Where((student) => 
             {
-                return student.StudentID.Contains(ID);
+                return student.StudentID.Contains(ID);  // Check if the student's ID contains the provided ID substring
             }).ToList();
 
             return filterdStudents;
         }
 
-        public static (int StudentCount, float AverageAge) GetSummary(List<Student> students)
+        public static (int StudentCount, float AverageAge) GetSummary(List<Student> students) // Method to get a summary of the student list (count of students and average age)
         {
-            int numberOfStudents = students.Count;
-            float avgAge = students.Aggregate(0, (sum, student) =>
+            int numberOfStudents = students.Count;  // Get the total number of students
+            float avgAge = students.Aggregate(0, (sum, student) =>  // Use Aggregate to sum up the ages of all students, and then calculate the average age
             {
-                return sum + student.Age;
+                return sum + student.Age; // Add each student's age to the cumulative sum
             }) / (float)numberOfStudents;
 
             return (numberOfStudents, avgAge);
@@ -127,9 +128,10 @@ namespace StudentManagementSystem
 
             return isValid;
         }
-
+        // Method to display a popup when duplicate student IDs are found
         public void ShowDuplicatePopup(string duplicateID)
         {
+            // Find students with the matching duplicate ID using LINQ
             var duplicates = students.Where(s => s.StudentID == duplicateID).ToList();
 
             // Create a new form to show duplicates
@@ -140,32 +142,33 @@ namespace StudentManagementSystem
                 Height = 200
             };
 
-            ListBox listBox = new ListBox
+            ListBox listBox = new ListBox // Create a ListBox to display the list of duplicate students
             {
-                Dock = DockStyle.Fill
+                Dock = DockStyle.Fill // The ListBox will fill the entire form
             };
 
-            foreach (var student in duplicates)
+            foreach (var student in duplicates) // Add each duplicate student to the ListBox
             {
                 listBox.Items.Add($"ID: {student.StudentID}, Name: {student.Name}, Age: {student.Age}, Course: {student.Course}");
             }
 
             duplicateForm.Controls.Add(listBox);
-            duplicateForm.ShowDialog();
+            duplicateForm.ShowDialog(); // Show the form as a dialog box (popup)
         }
 
+        // Method to delete a selected student from a DataGridView and the student list
         public void deleteStudent(DataGridView DGV, List<Student> studentList)
         {
-            if (DGV.SelectedRows.Count > 0)
+            if (DGV.SelectedRows.Count > 0) // Check if any row is selected in the DataGridView
             {
                 var selectedRow = DGV.SelectedRows[0];
-                var selectedStudent = (Student)selectedRow.DataBoundItem;
+                var selectedStudent = (Student)selectedRow.DataBoundItem;   // Cast the selected row's data to a Student object
 
-                studentList.RemoveAll(s => s.StudentID == selectedStudent.StudentID);
+                studentList.RemoveAll(s => s.StudentID == selectedStudent.StudentID);  // Remove the student from the list based on their StudentID
 
                 // Refresh DataGridView
-                DGV.DataSource = null;
-                DGV.DataSource = studentList;
+                DGV.DataSource = null; // Clear the current data source
+                DGV.DataSource = studentList; // Reassign the updated student list as the data source
                 MessageBox.Show("Student deleted successfully");
             }
             else
