@@ -182,11 +182,23 @@ namespace StudentManagementSystem
         public void LogData(string action, string studentId)
         {
 
-            if (!string.IsNullOrEmpty(action))
+            try
             {
+                if (!string.IsNullOrEmpty(action))
+                 {
                 // Add log entry with current timestamp
                 logList.Add((action, studentId, DateTime.Now));
+                 }
+
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while logging data: {ex.Message}");
+            
+             }
+
+
+
         }
 
 
@@ -194,8 +206,9 @@ namespace StudentManagementSystem
         public void LogToDataBase(List<(string Action, string StudentID, DateTime Timestamp)> logList)
         {
 
-
-            // Check if the database exists
+            try
+            {
+                // Check if the database exists
             if (File.Exists(databasePath))
             {
                 using (SQLiteConnection connection = new SQLiteConnection("Data Source=" + databasePath + ";Version=3;"))
@@ -221,10 +234,25 @@ namespace StudentManagementSystem
                     MessageBox.Show("Log data written to the database.");
                 }
             }
-            else
-            {
+                 else
+                 {
                 Console.WriteLine("Database not found at " + databasePath);
+                 }
+
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while logging data to the database: {ex.Message}");
+
+            }
+
+
+
+           
+
+
+
+
         }
 
 
@@ -232,7 +260,9 @@ namespace StudentManagementSystem
         public void ReadLogsFromDatabase()
         {
 
-            if (File.Exists(databasePath))
+            try
+            { 
+                if (File.Exists(databasePath))
             {
                 using (SQLiteConnection connection = new SQLiteConnection("Data Source=" + databasePath + ";Version=3;"))
                 {
@@ -265,6 +295,22 @@ namespace StudentManagementSystem
             {
                 MessageBox.Show("Database not found at " + databasePath);
             }
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"An error occurred while reading logs from the database: {ex.Message}");
+            }
+
+
+
+
+
+
+
+
+           
         }
 
 
