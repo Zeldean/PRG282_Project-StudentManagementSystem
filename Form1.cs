@@ -61,8 +61,6 @@ namespace StudentManagementSystem
             {
                 //add the student if validations are successful
                 dataHandler.Students.Add(new Student(IDtb.Text, NAMEtb.Text, (int)AGEtb.Value, COURSEtb.Text));
-                //List<string> list = new List<string>();  
-                //mywriter.write(dataHandler.Students);
                 bs.DataSource = null; // Clear previous data source
                 bs.DataSource = dataHandler.Students; // Update data source
                 dgvDataOutput.DataSource = bs; // Refresh the DataGridView
