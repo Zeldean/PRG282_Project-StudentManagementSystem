@@ -2,34 +2,48 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StudentManagementSystem
 {
-    internal class Read // Class to handle reading student data from a file
+    /// <summary>
+    /// Class responsible for reading student data from a file.
+    /// </summary>
+    internal class Read
     {
-        string filePath;
+        // Fields
+        private readonly string filePath;
 
-        public Read(string filePath) // Constructor to initialize the file path
+        // Constructor
+        public Read(string filePath)
         {
-            this.filePath = filePath; // Assign the provided file path to the class variable
+            this.filePath = filePath;
         }
 
-        public List<Student> read()  // Method to read the file and return a list of Student objects
+        /// <summary>
+        /// Reads the student data from the file and returns a list of Student objects.
+        /// </summary>
+        /// <returns>List of students read from the file.</returns>
+        public List<Student> read()
         {
             List<Student> students = new List<Student>();
-            List<string> list = File.ReadAllLines(filePath).ToList(); // Read all lines from the file and store them as a list of strings
 
             try
-            { 
-                foreach (string item in list)
-               {
-                string[] items = item.Split(','); // Split the line by commas to separate the student properties
-                    Student person = new Student(items[0], items[1], items[2], Convert.ToInt32(items[3]), items[4], items[5]);  // Create a new Student object using the split data (name, surname, age, grade)
-                    students.Add(person);
-               }
-
+            {
+                using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate))
+                {
+                    using (StreamReader sr = new StreamReader(fs))
+                    {
+                        string line;
+                        int count = 0;
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            string[] items = line.Split(',');
+                            Student person = new Student(items[0], items[1], items[2], Convert.ToInt32(items[3]), items[4], items[5]);
+                            students.Add(person);
+                            count++;
+                        }
+                    }
+                }
             }
             catch (FileNotFoundException ex)
             {
@@ -37,15 +51,12 @@ namespace StudentManagementSystem
             }
             catch (IOException ex)
             {
-                // Handle I/O errors, like read/write permission issues
                 Console.WriteLine($"I/O error while accessing file: {ex.Message}");
             }
             catch (Exception ex)
             {
-                // Any error I don't know of. (you're screwd)
                 Console.WriteLine($"An unexpected error occurred: {ex.Message}");
             }
-
 
             return students;
         }
