@@ -27,7 +27,7 @@ namespace StudentManagementSystem
         BindingSource bs = new BindingSource();
 
         List<(string Action, string StudentID, DateTime Timestamp)> ProgressList = new List<(string, string, DateTime)>();
-
+        bool unSavedChanges = false;
 
         public frmMain()
         {
@@ -83,8 +83,6 @@ namespace StudentManagementSystem
             {
                 Console.WriteLine("Database already exists.");
             }
-
-
         }
 
 
@@ -110,6 +108,7 @@ namespace StudentManagementSystem
                 dgvDataOutput.DataSource = bs; // Refresh the DataGridView
                 dataHandler.LogData("Student Added", IDtb.Text);
                 ProgressList = dataHandler.logList;
+                unSavedChanges = true;
                 ClearTextBoxes();
             }
         }
@@ -117,6 +116,7 @@ namespace StudentManagementSystem
         private void UPDATEbtn_Click(object sender, EventArgs e)
         {
             UpdateRow();
+            unSavedChanges = true;
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -148,6 +148,7 @@ namespace StudentManagementSystem
             dataHandler.deleteStudent(dgvDataOutput,dataHandler.Students);
             dataHandler.LogData("Deleted Student", IDtb.Text);
             ProgressList = dataHandler.logList;
+            unSavedChanges = true;
             ClearTextBoxes();
         }
 
@@ -240,6 +241,7 @@ namespace StudentManagementSystem
             bs.DataSource = dataHandler.Students;
             dgvDataOutput.DataSource = bs;
 
+            unSavedChanges = false;
             MessageBox.Show("Changes has been discarded");
         }
 
@@ -248,14 +250,20 @@ namespace StudentManagementSystem
             mywriter.write(dataHandler.Students);
             dataHandler.LogToDataBase(ProgressList);
             dataHandler.ReadLogsFromDatabase();
+
+            unSavedChanges = false;
             MessageBox.Show("Changes has been saved");
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to close. All unsaved changes will be lost", "Close", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (unSavedChanges)
             {
-                Environment.Exit(0);
+                string message = "Are you sure you want to close. All unsaved changes will be lost";
+                if (MessageBox.Show(message, "Close", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    Environment.Exit(0);
+                }
             }
         }
     }
