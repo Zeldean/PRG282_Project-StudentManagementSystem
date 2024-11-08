@@ -304,7 +304,7 @@
             this.dgvDataOutput.Size = new System.Drawing.Size(711, 544);
             this.dgvDataOutput.TabIndex = 9;
             this.dgvDataOutput.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
-            this.dgvDataOutput.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDataOutput_CellContentClick);
+            
             // 
             // btnDiscardChanges
             // 

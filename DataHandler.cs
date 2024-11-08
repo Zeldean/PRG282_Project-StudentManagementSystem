@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.ComponentModel;
+using System.Data.SqlClient;
 
 namespace StudentManagementSystem
 {
@@ -169,5 +170,32 @@ namespace StudentManagementSystem
                 MessageBox.Show("Please select a student to delete.");
             }
         }
+
+
+        
+        public List<string> LogData (string action)
+        {
+            List<string> LogList = new List<string>();
+            if (!string.IsNullOrEmpty(action))
+            {
+                LogList.Add(action);
+            }
+            return LogList;
+        }
+
+
+        public void LogToDataBase(List<string> list)
+        {
+            string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string databasePath = Path.Combine(appDirectory, "MyDatabase.mdf");
+
+            if (Directory.Exists(databasePath))
+            {
+                //using (SqlDataAdapter adapter = new SqlDataAdapter()) ;
+            }
+        }
+        
+
+
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace StudentManagementSystem
         static string filePath = Path.Combine(".", "Content.txt");
         Read myreader = new Read(filePath);
         Write mywriter = new Write(filePath);
+        
+
 
         // Create the dataHandler object
         DataHandler dataHandler = new DataHandler();
@@ -27,6 +30,7 @@ namespace StudentManagementSystem
         public frmMain()
         {
             InitializeComponent();
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -40,7 +44,9 @@ namespace StudentManagementSystem
             }
             dataHandler.Students = myreader.read();
         }
-        
+
+
+       
         private void VIEWbtn_Click(object sender, EventArgs e)
         {
             SEARCHtb.Clear();
@@ -195,11 +201,6 @@ namespace StudentManagementSystem
             {
                 Environment.Exit(0);
             }
-        }
-
-        private void dgvDataOutput_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
     }
 }
